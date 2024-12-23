@@ -1,7 +1,9 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "compilerOptions": {
+    "jsx": "react-jsx", // Ensure you're using the new JSX transform
+    "strict": true,      // Optional: Enforce strict type-checking options
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  }
 }
