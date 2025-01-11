@@ -2,14 +2,16 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // Define the state interface
 interface UserState {
-  id: string | null;
+  password: string | null;
   name: string | null;
+  role: string | null;
 }
 
 // Define the initial state
 const initialState: UserState = {
-  id: null,
+  password: null,
   name: null,
+  role: null
 };
 
 // Create the slice
@@ -19,13 +21,15 @@ const userSlice = createSlice({
   reducers: {
     // Action to set the user data
     setUser: (state, action: PayloadAction<UserState>) => {
-      state.id = action.payload.id;
+      state.password = action.payload.password;
       state.name = action.payload.name;
+      state.role = action.payload.role;
     },
     // Action to clear the user data
     clearUser: (state) => {
-      state.id = null;
+      state.password = null;
       state.name = null;
+      state.role = null;
     },
   },
 });

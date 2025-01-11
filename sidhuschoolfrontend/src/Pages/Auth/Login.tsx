@@ -6,10 +6,12 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { CustomIconButton } from '../../Components/CustomIconButton';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { CustomButton } from '../../Components/CustomButton';
 import { CustomTextField } from '../../Components/CustomTextField';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../../Redux/userSlice';
 
 // CustomTextField - purely for styling, no form control logic needed
 
@@ -20,11 +22,23 @@ interface FormData {
   password: string;
 }
 
+interface UserState {
+  password: string | null;
+  name: string | null;
+  role: string | null;
+}
+
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
     mode: 'onSubmit',  // Trigger validation on submit
   });
+
+  const selector = useSelector((state: { user: UserState }) => state.user);
+  const dispatch = useDispatch();
+  console.log(selector, 'sdhgbsjdfhsfjdf');
+
+  const role = selector.role;
 
   // Validation rules
   const validate = {
@@ -49,10 +63,14 @@ const Login: React.FC = () => {
 
   const navigate = useNavigate();
 
+
   // Form submission handler
   const onSubmit = (data: FormData) => {
     console.log(data); // Handle form data
-    navigate('/sidebar'); // Navigate to the next page after successful login
+    if (role === 'admin') {
+      dispatch(setUser({ name: data.username, password: data.password, role: "admin" }));
+      navigate('/admin/dashboard');
+    }
   };
 
   return (
@@ -90,7 +108,7 @@ const Login: React.FC = () => {
                   fontWeight: 'bold',
                 }}
               >
-                Login
+                {role && (role[0].toUpperCase() + role.slice(1))} Login
               </Typography>
             </Grid>
 
@@ -144,6 +162,17 @@ const Login: React.FC = () => {
                 )}
               />
             </Grid>
+
+
+            <Grid item>
+              {(role === 'admin') && (<Link to="/admin/register">
+                <Typography align="center" variant="body2">
+                  Don't have an account? Register Now
+                </Typography>
+              </Link>)
+              }
+            </Grid>
+
 
             {/* Submit Button */}
             <Grid item>

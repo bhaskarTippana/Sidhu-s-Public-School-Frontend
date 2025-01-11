@@ -2,11 +2,17 @@ import { Grid, IconButton, Tooltip, Typography } from "@mui/material";
 import React from "react";
 import logo from "../Assets/logo.svg";
 import AppsIcon from "@mui/icons-material/Apps";
-// import { CustomButton } from "./CustomButton";
-// import LoginIcon from "@mui/icons-material/Login";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import { useSelector } from "react-redux";
 
-const NavBar = () => {
+// Define the types for the component props
+interface NavBarProps {
+  open: boolean;  // 'open' will be a boolean
+  toggleDrawer: (open: boolean) => void;  // 'toggleDrawer' is a function that takes a boolean and returns void
+}
+
+const NavBar: React.FC<NavBarProps> = ({ open, toggleDrawer }) => {
+  const role = useSelector((state: { user: { role: string } }) => state.user.role);
   return (
     <Grid
       container
@@ -14,7 +20,7 @@ const NavBar = () => {
         backgroundColor: "#e6e6e6",
         position: "static",
         alignItems: "center",
-        height:"65px"
+        height: "65px",
       }}
     >
       <Grid item xs={2}>
@@ -32,9 +38,12 @@ const NavBar = () => {
             </Typography>
           </Grid>
           <Grid item xs={2}>
-            <IconButton>
+        {role &&    <IconButton
+              onClick={() => toggleDrawer(!open)}  // This correctly toggles the drawer
+              aria-label="Toggle Navigation Menu"
+            >
               <AppsIcon />
-            </IconButton>
+            </IconButton>}
           </Grid>
         </Grid>
       </Grid>
