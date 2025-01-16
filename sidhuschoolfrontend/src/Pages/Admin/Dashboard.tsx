@@ -111,7 +111,7 @@ const Dashboard: React.FC = () => {
             </Grid>
 
             <Grid item xs={12}>
-                <Grid container>
+                {/* <Grid container>
                     <Grid item xs={5}>
                         {" "}
                         <BarChart
@@ -149,7 +149,7 @@ const Dashboard: React.FC = () => {
                             </DemoContainer>
                         </LocalizationProvider>
                     </Grid>
-                </Grid>
+                </Grid> */}
             </Grid>
         </Grid>
     );
